@@ -64,6 +64,10 @@ High level orverview of the very simple code architecture :
 2017-06-23 20:20:41,531 - dcos-autoscaler - INFO - Ratio CPU = 70.0% - Ratio MEM = 12.061248527679624%
 ```
 
+### Running the autoscaler in your cluster
+
+Marathon.json 
+
 ### Example for Microsoft Azure :
 
 Documentation in progress...
@@ -73,8 +77,10 @@ In this example, you:
 * Deployed a DC/OS cluster, Manually, or using ACS it doesn't matter, you just have to use VMSS
 * [Added a custom mesos attribute on the nodes](https://dcos.io/docs/1.8/administration/faq/#q-how-to-add-mesos-attributes-to-nodes-to-use-marathon-constraints-) that you want to scale
 
+
+From inside the cluster, run this command :
 ```
-python main.py -vv 
+docker run -it -d julienstroheker/dcos-autoscaler python main.py -vv 
     --provider-name Azure 
     --azure-subscription-id 8f26a68d-8613-4a0c-a2a6-2d2d0e261910
     --azure-tenant-id 333c7f36-ba66-49f1-9d8a-a450816e8516
