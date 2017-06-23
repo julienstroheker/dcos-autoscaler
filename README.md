@@ -6,12 +6,12 @@ Experimental project
 
 Autoscaling a DCOS cluster hosted in a cloud provider, either Private or Public, by specifying options.
 
-![](./docs/overview.png)
+![](./docs/Overview.png)
 
 !! In development using Microsoft Azure, but more that welcome to have contribution for AWS, GCE and others providers...
 
-|Option | Description | Default |
-|---|---|---|---|---|
+| Option | Description | Default |
+|---|---|---|
 | --provider-name | provider who host the cluster. ex: Azure, GCE, AWS... |   |
 | --timer | time in seconds between successive checks | 60 |
 | --scale-up-cap | Threshold to kick the scale Up in percentage | 80 |
@@ -29,7 +29,7 @@ Autoscaling a DCOS cluster hosted in a cloud provider, either Private or Public,
 
 High level orverview of the very simple code architecture :
 
-![](./docs/overviewArchi.png)
+![](./docs/OverviewArchi.png)
 
 ### Example for Microsoft Azure :
 
