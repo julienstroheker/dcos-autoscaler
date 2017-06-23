@@ -1,0 +1,581 @@
+{
+    "slaves": [
+        {
+            "id": "eec4da0a-539d-441e-a061-dd795d3002e5-S5",
+            "hostname": "10.1.0.8",
+            "port": 5051,
+            "attributes": {
+                "workload": "stateless",
+                "type": "private"
+            },
+            "pid": "slave(1)@10.1.0.8:5051",
+            "registered_time": 1498141628.9351,
+            "resources": {
+                "disk": 26460.0,
+                "mem": 5943.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[1025-2180, 2182-3887, 3889-5049, 5052-8079, 8082-8180, 8182-32000]"
+            },
+            "used_resources": {
+                "disk": 0.0,
+                "mem": 1024.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[20357-20357, 24192-24192]"
+            },
+            "offered_resources": {
+                "disk": 0.0,
+                "mem": 0.0,
+                "gpus": 0.0,
+                "cpus": 0.0
+            },
+            "reserved_resources": {},
+            "unreserved_resources": {
+                "disk": 26460.0,
+                "mem": 5943.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[1025-2180, 2182-3887, 3889-5049, 5052-8079, 8082-8180, 8182-32000]"
+            },
+            "active": true,
+            "version": "1.2.1",
+            "reserved_resources_full": {},
+            "used_resources_full": [
+                {
+                    "name": "cpus",
+                    "type": "SCALAR",
+                    "scalar": {
+                        "value": 2.0
+                    },
+                    "role": "*",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                },
+                {
+                    "name": "mem",
+                    "type": "SCALAR",
+                    "scalar": {
+                        "value": 1024.0
+                    },
+                    "role": "*",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                },
+                {
+                    "name": "ports",
+                    "type": "RANGES",
+                    "ranges": {
+                        "range": [
+                            {
+                                "begin": 20357,
+                                "end": 20357
+                            },
+                            {
+                                "begin": 24192,
+                                "end": 24192
+                            }
+                        ]
+                    },
+                    "role": "*",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                }
+            ],
+            "offered_resources_full": []
+        },
+        {
+            "id": "eec4da0a-539d-441e-a061-dd795d3002e5-S4",
+            "hostname": "10.0.0.5",
+            "port": 5051,
+            "attributes": {
+                "workload": "statefull",
+                "type": "private"
+            },
+            "pid": "slave(1)@10.0.0.5:5051",
+            "registered_time": 1498141622.18543,
+            "resources": {
+                "disk": 26459.0,
+                "mem": 5943.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[1025-2180, 2182-3887, 3889-5049, 5052-8079, 8082-8180, 8182-32000]"
+            },
+            "used_resources": {
+                "disk": 0.0,
+                "mem": 0.0,
+                "gpus": 0.0,
+                "cpus": 0.0
+            },
+            "offered_resources": {
+                "disk": 0.0,
+                "mem": 0.0,
+                "gpus": 0.0,
+                "cpus": 0.0
+            },
+            "reserved_resources": {},
+            "unreserved_resources": {
+                "disk": 26459.0,
+                "mem": 5943.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[1025-2180, 2182-3887, 3889-5049, 5052-8079, 8082-8180, 8182-32000]"
+            },
+            "active": true,
+            "version": "1.2.1",
+            "reserved_resources_full": {},
+            "used_resources_full": [],
+            "offered_resources_full": []
+        },
+        {
+            "id": "eec4da0a-539d-441e-a061-dd795d3002e5-S6",
+            "hostname": "10.0.0.6",
+            "port": 5051,
+            "attributes": {
+                "workload": "statefull",
+                "type": "private"
+            },
+            "pid": "slave(1)@10.0.0.6:5051",
+            "registered_time": 1498141632.79475,
+            "resources": {
+                "disk": 26459.0,
+                "mem": 5943.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[1025-2180, 2182-3887, 3889-5049, 5052-8079, 8082-8180, 8182-32000]"
+            },
+            "used_resources": {
+                "disk": 0.0,
+                "mem": 0.0,
+                "gpus": 0.0,
+                "cpus": 0.0
+            },
+            "offered_resources": {
+                "disk": 0.0,
+                "mem": 0.0,
+                "gpus": 0.0,
+                "cpus": 0.0
+            },
+            "reserved_resources": {},
+            "unreserved_resources": {
+                "disk": 26459.0,
+                "mem": 5943.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[1025-2180, 2182-3887, 3889-5049, 5052-8079, 8082-8180, 8182-32000]"
+            },
+            "active": true,
+            "version": "1.2.1",
+            "reserved_resources_full": {},
+            "used_resources_full": [],
+            "offered_resources_full": []
+        },
+        {
+            "id": "eec4da0a-539d-441e-a061-dd795d3002e5-S3",
+            "hostname": "10.2.0.4",
+            "port": 5051,
+            "attributes": {
+                "type": "public"
+            },
+            "pid": "slave(1)@10.2.0.4:5051",
+            "registered_time": 1498141619.63253,
+            "resources": {
+                "disk": 26459.0,
+                "mem": 5943.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[1-21, 23-5050, 5052-32000]"
+            },
+            "used_resources": {
+                "disk": 0.0,
+                "mem": 1024.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[80-80, 443-443, 9090-9091, 10000-10100]"
+            },
+            "offered_resources": {
+                "disk": 0.0,
+                "mem": 0.0,
+                "gpus": 0.0,
+                "cpus": 0.0
+            },
+            "reserved_resources": {
+                "slave_public": {
+                    "disk": 26459.0,
+                    "mem": 5943.0,
+                    "gpus": 0.0,
+                    "cpus": 2.0,
+                    "ports": "[1-21, 23-5050, 5052-32000]"
+                }
+            },
+            "unreserved_resources": {
+                "disk": 0.0,
+                "mem": 0.0,
+                "gpus": 0.0,
+                "cpus": 0.0
+            },
+            "active": true,
+            "version": "1.2.1",
+            "reserved_resources_full": {
+                "slave_public": [
+                    {
+                        "name": "ports",
+                        "type": "RANGES",
+                        "ranges": {
+                            "range": [
+                                {
+                                    "begin": 1,
+                                    "end": 21
+                                },
+                                {
+                                    "begin": 23,
+                                    "end": 5050
+                                },
+                                {
+                                    "begin": 5052,
+                                    "end": 32000
+                                }
+                            ]
+                        },
+                        "role": "slave_public"
+                    },
+                    {
+                        "name": "disk",
+                        "type": "SCALAR",
+                        "scalar": {
+                            "value": 26459.0
+                        },
+                        "role": "slave_public"
+                    },
+                    {
+                        "name": "cpus",
+                        "type": "SCALAR",
+                        "scalar": {
+                            "value": 2.0
+                        },
+                        "role": "slave_public"
+                    },
+                    {
+                        "name": "mem",
+                        "type": "SCALAR",
+                        "scalar": {
+                            "value": 5943.0
+                        },
+                        "role": "slave_public"
+                    }
+                ]
+            },
+            "used_resources_full": [
+                {
+                    "name": "cpus",
+                    "type": "SCALAR",
+                    "scalar": {
+                        "value": 2.0
+                    },
+                    "role": "slave_public",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                },
+                {
+                    "name": "mem",
+                    "type": "SCALAR",
+                    "scalar": {
+                        "value": 1024.0
+                    },
+                    "role": "slave_public",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                },
+                {
+                    "name": "ports",
+                    "type": "RANGES",
+                    "ranges": {
+                        "range": [
+                            {
+                                "begin": 80,
+                                "end": 80
+                            },
+                            {
+                                "begin": 443,
+                                "end": 443
+                            },
+                            {
+                                "begin": 9090,
+                                "end": 9091
+                            },
+                            {
+                                "begin": 10000,
+                                "end": 10100
+                            }
+                        ]
+                    },
+                    "role": "slave_public",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                }
+            ],
+            "offered_resources_full": []
+        },
+        {
+            "id": "eec4da0a-539d-441e-a061-dd795d3002e5-S2",
+            "hostname": "10.1.0.6",
+            "port": 5051,
+            "attributes": {
+                "workload": "stateless",
+                "type": "private"
+            },
+            "pid": "slave(1)@10.1.0.6:5051",
+            "registered_time": 1498141618.71784,
+            "resources": {
+                "disk": 26459.0,
+                "mem": 5943.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[1025-2180, 2182-3887, 3889-5049, 5052-8079, 8082-8180, 8182-32000]"
+            },
+            "used_resources": {
+                "disk": 0.0,
+                "mem": 1024.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[2353-2353, 6560-6560]"
+            },
+            "offered_resources": {
+                "disk": 0.0,
+                "mem": 0.0,
+                "gpus": 0.0,
+                "cpus": 0.0
+            },
+            "reserved_resources": {},
+            "unreserved_resources": {
+                "disk": 26459.0,
+                "mem": 5943.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[1025-2180, 2182-3887, 3889-5049, 5052-8079, 8082-8180, 8182-32000]"
+            },
+            "active": true,
+            "version": "1.2.1",
+            "reserved_resources_full": {},
+            "used_resources_full": [
+                {
+                    "name": "cpus",
+                    "type": "SCALAR",
+                    "scalar": {
+                        "value": 2.0
+                    },
+                    "role": "*",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                },
+                {
+                    "name": "mem",
+                    "type": "SCALAR",
+                    "scalar": {
+                        "value": 1024.0
+                    },
+                    "role": "*",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                },
+                {
+                    "name": "ports",
+                    "type": "RANGES",
+                    "ranges": {
+                        "range": [
+                            {
+                                "begin": 2353,
+                                "end": 2353
+                            },
+                            {
+                                "begin": 6560,
+                                "end": 6560
+                            }
+                        ]
+                    },
+                    "role": "*",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                }
+            ],
+            "offered_resources_full": []
+        },
+        {
+            "id": "eec4da0a-539d-441e-a061-dd795d3002e5-S1",
+            "hostname": "10.1.0.4",
+            "port": 5051,
+            "attributes": {
+                "workload": "stateless",
+                "type": "private"
+            },
+            "pid": "slave(1)@10.1.0.4:5051",
+            "registered_time": 1498141617.68611,
+            "resources": {
+                "disk": 26460.0,
+                "mem": 5943.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[1025-2180, 2182-3887, 3889-5049, 5052-8079, 8082-8180, 8182-32000]"
+            },
+            "used_resources": {
+                "disk": 0.0,
+                "mem": 512.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[3955-3955]"
+            },
+            "offered_resources": {
+                "disk": 0.0,
+                "mem": 0.0,
+                "gpus": 0.0,
+                "cpus": 0.0
+            },
+            "reserved_resources": {},
+            "unreserved_resources": {
+                "disk": 26460.0,
+                "mem": 5943.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[1025-2180, 2182-3887, 3889-5049, 5052-8079, 8082-8180, 8182-32000]"
+            },
+            "active": true,
+            "version": "1.2.1",
+            "reserved_resources_full": {},
+            "used_resources_full": [
+                {
+                    "name": "cpus",
+                    "type": "SCALAR",
+                    "scalar": {
+                        "value": 1.0
+                    },
+                    "role": "*",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                },
+                {
+                    "name": "mem",
+                    "type": "SCALAR",
+                    "scalar": {
+                        "value": 512.0
+                    },
+                    "role": "*",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                },
+                {
+                    "name": "ports",
+                    "type": "RANGES",
+                    "ranges": {
+                        "range": [
+                            {
+                                "begin": 3955,
+                                "end": 3955
+                            }
+                        ]
+                    },
+                    "role": "*",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                }
+            ],
+            "offered_resources_full": []
+        },
+        {
+            "id": "eec4da0a-539d-441e-a061-dd795d3002e5-S0",
+            "hostname": "10.1.0.7",
+            "port": 5051,
+            "attributes": {
+                "workload": "stateless",
+                "type": "private"
+            },
+            "pid": "slave(1)@10.1.0.7:5051",
+            "registered_time": 1498141617.38877,
+            "resources": {
+                "disk": 26459.0,
+                "mem": 5943.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[1025-2180, 2182-3887, 3889-5049, 5052-8079, 8082-8180, 8182-32000]"
+            },
+            "used_resources": {
+                "disk": 0.0,
+                "mem": 512.0,
+                "gpus": 0.0,
+                "cpus": 1.0,
+                "ports": "[22687-22687]"
+            },
+            "offered_resources": {
+                "disk": 0.0,
+                "mem": 0.0,
+                "gpus": 0.0,
+                "cpus": 0.0
+            },
+            "reserved_resources": {},
+            "unreserved_resources": {
+                "disk": 26459.0,
+                "mem": 5943.0,
+                "gpus": 0.0,
+                "cpus": 2.0,
+                "ports": "[1025-2180, 2182-3887, 3889-5049, 5052-8079, 8082-8180, 8182-32000]"
+            },
+            "active": true,
+            "version": "1.2.1",
+            "reserved_resources_full": {},
+            "used_resources_full": [
+                {
+                    "name": "cpus",
+                    "type": "SCALAR",
+                    "scalar": {
+                        "value": 1.0
+                    },
+                    "role": "*",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                },
+                {
+                    "name": "mem",
+                    "type": "SCALAR",
+                    "scalar": {
+                        "value": 512.0
+                    },
+                    "role": "*",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                },
+                {
+                    "name": "ports",
+                    "type": "RANGES",
+                    "ranges": {
+                        "range": [
+                            {
+                                "begin": 22687,
+                                "end": 22687
+                            }
+                        ]
+                    },
+                    "role"Mid: "*",
+                    "allocation_info": {
+                        "role": "slave_public"
+                    }
+                }
+            ],
+            "offered_resources_full": []
+        }
+    ],
+    "recovered_slaves": []
+}
+

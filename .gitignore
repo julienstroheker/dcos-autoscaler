@@ -1,0 +1,4 @@
+dcos-autoscaler
+.idea
+autoscaler/__pycache__
+tests/__pycache__/
