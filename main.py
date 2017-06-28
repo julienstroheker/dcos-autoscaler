@@ -16,18 +16,31 @@ DEBUG_LOGGING_MAP = {
 }
 
 @click.command()
-@click.option('--provider-name', help='provider who host the cluster. ex: Azure, GCE, AWS', type=click.Choice(['Azure']))
+@click.option('--provider-name', help='provider who host the cluster. ex: Azure, GCE, AWS',
+              type=click.Choice(['Azure']))
 @click.option("--timer", default=60, help='time in seconds between successive checks')
-@click.option('--scale-up-cap', default=80, help='Threshold to kick the scale Up in percentage, default is 80')
-@click.option('--scale-down-cap', default=20, help='Threshold to kick the scale Down in percentage, default is 20')
+@click.option('--scale-up-cap', default=80,
+              help='Threshold to kick the scale Up in percentage, default is 80')
+@click.option('--scale-down-cap', default=20,
+              help='Threshold to kick the scale Down in percentage, default is 20')
 @click.option('--scale-max', default=20, help='Maximum nodes limitation to scale, default is 20')
 @click.option('--scale-min', default=3, help='Minimum nodes limitation to scale, default is 3')
-@click.option('--endpoint-path', default="http://leader.mesos:5050/slaves", help='Endpoint to fetch metrics, default is http://leader.mesos:5050/slaves')
-@click.option('--azure-subscription-id', default="", help='Azure Subscription ID', envvar='AZURE_SUBSCRIPTION_ID')
+@click.option('--resource-tracker', default="cpus", help='Resource to watch, cpus, mem, disk, gpus',
+              type=click.Choice(['disk', 'mem', 'gpus', 'cpus']))
+@click.option('--attribute-key', default="workload",
+              help='Node Attribute key to watch for the scale, default is workload')
+@click.option('--attribute-value', default="stateless",
+              help='Node Attribute value to watch for the scale, default is stateless')
+@click.option('--endpoint-path', default="http://leader.mesos:5050/slaves",
+              help='Endpoint to fetch metrics, default is http://leader.mesos:5050/slaves')
+@click.option('--azure-subscription-id', default="", help='Azure Subscription ID',
+              envvar='AZURE_SUBSCRIPTION_ID')
 @click.option('--azure-tenant-id', default="", help='Azure Tenant ID', envvar='AZURE_TENANT_ID')
 @click.option('--azure-client-id', default="", help='Azure Client ID', envvar='AZURE_CLIENT_ID')
-@click.option('--azure-client-secret', default="", help='Azure Client Secret', envvar='AZURE_CLIENT_SECRET')
-@click.option('--azure-location', default="eastus", help='Azure DC Location', envvar='AZURE_LOCATION')
+@click.option('--azure-client-secret', default="", help='Azure Client Secret',
+              envvar='AZURE_CLIENT_SECRET')
+@click.option('--azure-location', default="eastus", help='Azure DC Location',
+              envvar='AZURE_LOCATION')
 @click.option('--azure-resource-group', default="", help='Azure Resource Group', envvar='AZURE_RG')
 @click.option('--azure-vmss-name', default="", help='Azure VMSS Name to scale', envvar='AZURE_VMSS')
 @click.option('--verbose', '-v',
@@ -36,10 +49,10 @@ DEBUG_LOGGING_MAP = {
               type=click.IntRange(0, 3, clamp=True),
               count=True, default=2)
 
-def main(provider_name, timer, scale_up_cap, scale_down_cap, scale_max, scale_min, endpoint_path,
-         azure_subscription_id, azure_tenant_id, azure_client_id, azure_client_secret,
-         azure_location, azure_resource_group, azure_vmss_name,
-         verbose):
+def main(provider_name, timer, scale_up_cap, scale_down_cap, scale_max, scale_min,
+         resource_tracker, attribute_key, attribute_value,
+         endpoint_path, azure_subscription_id, azure_tenant_id, azure_client_id, azure_client_secret,
+         azure_location, azure_resource_group, azure_vmss_name, verbose):
     #Logger settings
     logger_handler = logging.StreamHandler(sys.stderr)
     logger_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
@@ -58,6 +71,9 @@ def main(provider_name, timer, scale_up_cap, scale_down_cap, scale_max, scale_mi
     logger.debug("Scale Down Cap : " + str(scale_down_cap))
     logger.debug("Maximum Nodes : " + str(scale_max))
     logger.debug("Minimum Nodes : " + str(scale_min))
+    logger.debug("Resource Tracker : " + str(resource_tracker))
+    logger.debug("Attribute Key : " + str(attribute_key))
+    logger.debug("Attribute Value : " + str(attribute_value))
     logger.debug("Azure Subscription ID : " + azure_subscription_id)
     logger.debug("Azure Tenant ID : " + azure_tenant_id)
     logger.debug("Azure Client ID : " + azure_client_id)
@@ -82,17 +98,32 @@ def main(provider_name, timer, scale_up_cap, scale_down_cap, scale_max, scale_mi
                       azure_resource_group=azure_resource_group,
                       azure_vmss_name=azure_vmss_name)
     while True:
-        metrics = {"totalCPU": 0, "totalMEM": 0, "usedCPU": 0, "usedMEM": 0, "ratioCPU": 0, "ratioMEM": 0, "nbNodes": 0}
-        cluster.check_health(metrics)
-        logger.info("Total Cluster CPU = " + str(metrics["totalCPU"]) + " - Total Cluster CPU = " + str(metrics["totalMEM"]))
-        logger.info("Total Used CPU = " + str(metrics["usedCPU"]) + " - Total Cluster MEM = " + str(metrics["usedMEM"]))
-        logger.info("Ratio CPU = " + str(metrics["ratioCPU"]) + "% - Ratio MEM = " + str(metrics["ratioMEM"])+ "%")
-        if cluster.decide_to_scale(metrics) == 1:
+        metrics = {"totalCPU": 0, "totalMEM": 0, "totalDISK": 0, "totalGPU": 0,
+                   "usedCPU": 0, "usedMEM": 0, "usedDISK": 0, "usedGPU": 0,
+                   "ratioCPU": 0, "ratioMEM": 0, "ratioDISK": 0, "ratioGPU": 0,
+                   "nbNodes": 0}
+        cluster.check_health(metrics, resource_tracker, attribute_key, attribute_value)
+
+        logger.info("Total Cluster CPU = " + str(metrics["totalCPU"])
+                    + " - Total Cluster MEM = " + str(metrics["totalMEM"])
+                    + " - Total Cluster DISK = " + str(metrics["totalDISK"])
+                    + " - Total Cluster GPU = " + str(metrics["totalGPU"]))
+        logger.info("Total Used CPU = " + str(metrics["usedCPU"])
+                    + " - Total Used MEM = " + str(metrics["usedMEM"])
+                    + " - Total Used DISK = " + str(metrics["usedDISK"])
+                    + " - Total Used GPU = " + str(metrics["usedGPU"]))
+        logger.info("Ratio CPU = " + str(metrics["ratioCPU"])
+                    + " % - Ratio MEM = " + str(metrics["ratioMEM"])
+                    + " % - Ratio DISK = " + str(metrics["ratioDISK"])
+                    + " % - Ratio GPU = " + str(metrics["ratioGPU"]) + " %")
+
+        if cluster.decide_to_scale(metrics, resource_tracker) == 1:
             logger.info("Scale Up Kicked ... In Progress")
-            cluster.scale_cluster_up(metrics)
-        if cluster.decide_to_scale(metrics) == -1:
+            cluster.scale_cluster_up(metrics, attribute_key, attribute_value)
+
+        if cluster.decide_to_scale(metrics, resource_tracker) == -1:
             logger.info("Scale Down Kicked... In Progress")
-            cluster.scale_cluster_down(metrics)
+            cluster.scale_cluster_down(metrics, attribute_key, attribute_value)
         time.sleep(timer)
 
     logger.info("DC/OS Autoscaler Stopped")

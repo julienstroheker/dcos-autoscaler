@@ -48,4 +48,4 @@ class TestCluster():
         # Act
         response = cluster.filter_stateless(metrics, cluster.get_health())
         # Assert
-        assert_equals(response['nbNodes'], 4)
+        assert_equals(len(response['nbNodes']), 4)
