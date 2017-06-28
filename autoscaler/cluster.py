@@ -1,28 +1,22 @@
 import logging
-import requests
 import sys
 import time
 import json
+import requests
 
 from autoscaler.provider import Provider
 
-logger = logging.getLogger('dcos-autoscaler')
+LOGGER = logging.getLogger('dcos-autoscaler')
 
 class Cluster(object):
     def __init__(self, provider_name, scale_up_cap, scale_down_cap, scale_max, scale_min,
-                 azure_subscription_id, azure_tenant_id, azure_client_id, azure_client_secret,
-                 azure_location, azure_resource_group, azure_vmss_name):
+                 endpoint_path, azure_subscription_id, azure_tenant_id, azure_client_id,
+                 azure_client_secret, azure_location, azure_resource_group, azure_vmss_name):
         self.scale_up_cap = scale_up_cap
         self.scale_down_cap = scale_down_cap
         self.scale_max = scale_max
         self.scale_min = scale_min
-        self.metricsEndpoint = "http://leader.mesos"
-        self.metricsPort = "5050"
-        self.metricsPath = "/slaves"
-        self.metricsFullEndpoint = self.metricsEndpoint + ":" + self.metricsPort + self.metricsPath
-        self.health = {}
-        self.healthStateless = {}
-        self.metrics = {}
+        self.endpoint_path = endpoint_path
         self.provider = Provider(provider_name=provider_name,
                                  azure_subscription_id=azure_subscription_id,
                                  azure_tenant_id=azure_tenant_id,
@@ -34,60 +28,61 @@ class Cluster(object):
 
 
     def get_health(self):
-        logger.debug("Get Health Cluster")
+        LOGGER.debug("Get Health Cluster")
         try:
-            r = requests.get(self.metricsFullEndpoint)
-            self.health = r.json()
+            r = requests.get(self.endpoint_path)
+            return r.json()
             #with open('tests/mockupDown2.json') as json_data:
-                #self.health = json.load(json_data)
+                #return json.load(json_data)
         except:
-            logger.error(sys.exc_info()[0])
+            LOGGER.error(sys.exc_info()[0])
             exit(1)
-        logger.debug("Health from : " + self.metricsFullEndpoint)
-        #logger.debug(self.health)
 
 
 
-    def filter_stateless(self):
-        logger.debug("Filter the health object to get only the stateless nodes")
-        self.metrics = {"totalCPU": 0, "totalMEM": 0, "usedCPU": 0, "usedMEM": 0, "ratioCPU": 0, "ratioMEM": 0,
-                        "nbNodes": 0}
-        for node in self.health['slaves']:
+    def filter_stateless(self, metrics, raw_health):
+        LOGGER.debug("Filter the health object to get only the stateless nodes")
+        for node in raw_health['slaves']:
             if 'attributes' in node and node['active']:
                 if 'workload' in node['attributes']:
                     if node['attributes']['workload'] == "stateless":
-                        self.metrics["totalCPU"] += node['resources']['cpus']
-                        self.metrics["totalMEM"] += node['resources']['mem']
-                        self.metrics["usedCPU"] += node['used_resources']['cpus']
-                        self.metrics["usedMEM"] += node['used_resources']['mem']
-                        self.metrics["nbNodes"] = self.metrics["nbNodes"] + 1
-                        logger.debug(node['hostname'] + " - Added to the stateless pool")
+                        metrics["totalCPU"] += node['resources']['cpus']
+                        metrics["totalMEM"] += node['resources']['mem']
+                        metrics["usedCPU"] += node['used_resources']['cpus']
+                        metrics["usedMEM"] += node['used_resources']['mem']
+                        metrics["nbNodes"] = metrics["nbNodes"] + 1
+                        LOGGER.debug(node['hostname'] + " - Added to the stateless pool")
+        return metrics
 
 
-    def check_health(self):
-        self.get_health()
-        self.filter_stateless()
+    def check_health(self, metrics):
+        health = self.get_health()
+        metrics = self.filter_stateless(metrics, health)
+        metrics["ratioCPU"] = ((metrics["usedCPU"]*100)/metrics["totalCPU"])
+        metrics["ratioMEM"] = ((metrics["usedMEM"]*100)/metrics["totalMEM"])
 
-        self.metrics["ratioCPU"] = ((self.metrics["usedCPU"]*100)/self.metrics["totalCPU"])
-        self.metrics["ratioMEM"] = ((self.metrics["usedMEM"]*100)/self.metrics["totalMEM"])
-        logger.info("Total Cluster CPU = " + str(self.metrics["totalCPU"]) + " - Total Cluster CPU = " + str(self.metrics["totalMEM"]))
-        logger.info("Total Used CPU = " + str(self.metrics["usedCPU"]) + " - Total Cluster MEM = " + str(self.metrics["usedMEM"]))
-        logger.info("Ratio CPU = " + str(self.metrics["ratioCPU"]) + "% - Ratio MEM = " + str(self.metrics["ratioMEM"])+ "%")
+    def decide_to_scale(self, metrics):
+        if metrics["ratioCPU"] >= self.scale_up_cap and metrics["nbNodes"] <= self.scale_max:
+            return 1
+        if metrics["ratioCPU"] <= self.scale_down_cap and metrics["nbNodes"] >= self.scale_min:
+            return -1
 
-    def decide_to_scale(self):
-        if self.metrics["ratioCPU"] >= self.scale_up_cap and self.metrics["nbNodes"] <= self.scale_max:
-            logger.info("Scale Up Kicked")
-            self.provider.scale_up()
-            self.waiting_scale()
-        if self.metrics["ratioCPU"] <= self.scale_down_cap and self.metrics["nbNodes"] >= self.scale_min:
-            logger.info("Scale Down Kicked")
-            self.provider.scale_down()
-            self.waiting_scale()
-
-    def waiting_scale(self):
-        current_state=self.metrics
-        while self.metrics == current_state:
-            logger.info("Waiting for new status of the cluster...")
-            self.get_health()
-            self.filter_stateless()
+    def waiting_scale(self, metrics):
+        current_state = metrics
+        while metrics == current_state:
+            LOGGER.debug(
+                "Waiting for new status of the cluster...Current State = "
+                + current_state["totalCPU"])
+            current_state = self.filter_stateless(current_state, self.get_health())
             time.sleep(30)
+        return True
+
+    def scale_cluster_up(self, metrics):
+        self.provider.scale_up()
+        self.waiting_scale(metrics)
+        return True
+
+    def scale_cluster_down(self, metrics):
+        self.provider.scale_down()
+        self.waiting_scale(metrics)
+        return True

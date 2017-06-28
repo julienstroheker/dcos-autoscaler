@@ -1,4 +1,5 @@
 dcos-autoscaler
 .idea
 autoscaler/__pycache__
-tests/__pycache__/
+test/__pycache__
+.cache
