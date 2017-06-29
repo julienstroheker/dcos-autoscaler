@@ -1,6 +1,9 @@
 # dcos-autoscaler
 [![Build Status](https://travis-ci.org/julienstroheker/dcos-autoscaler.svg?branch=master)](https://travis-ci.org/julienstroheker/dcos-autoscaler)
 
+
+![](./docs/dcos-autoscaler-logo.png)
+
 ## !! In development !!
 
 Experimental project
