@@ -22,6 +22,7 @@ DEBUG_LOGGING_MAP = {
 @click.option('--scale-down-cap', default=20, help='Threshold to kick the scale Down in percentage, default is 20')
 @click.option('--scale-max', default=20, help='Maximum nodes limitation to scale, default is 20')
 @click.option('--scale-min', default=3, help='Minimum nodes limitation to scale, default is 3')
+@click.option('--endpoint-path', default="http://leader.mesos:5050/slaves", help='Endpoint to fetch metrics, default is http://leader.mesos:5050/slaves')
 @click.option('--azure-subscription-id', default="", help='Azure Subscription ID', envvar='AZURE_SUBSCRIPTION_ID')
 @click.option('--azure-tenant-id', default="", help='Azure Tenant ID', envvar='AZURE_TENANT_ID')
 @click.option('--azure-client-id', default="", help='Azure Client ID', envvar='AZURE_CLIENT_ID')
@@ -35,7 +36,7 @@ DEBUG_LOGGING_MAP = {
               type=click.IntRange(0, 3, clamp=True),
               count=True, default=2)
 
-def main(provider_name, timer, scale_up_cap, scale_down_cap, scale_max, scale_min,
+def main(provider_name, timer, scale_up_cap, scale_down_cap, scale_max, scale_min, endpoint_path,
          azure_subscription_id, azure_tenant_id, azure_client_id, azure_client_secret,
          azure_location, azure_resource_group, azure_vmss_name,
          verbose):
@@ -48,7 +49,7 @@ def main(provider_name, timer, scale_up_cap, scale_down_cap, scale_max, scale_mi
     logger.debug("Debug mode activated")
 
     if not provider_name:
-        logger.error("Provider not specified, ex : --provider Azure")
+        logger.error("Provider not specified, ex : --provider-name Azure")
         sys.exit(1)
 
     logger.debug("Provider Name : " + provider_name)
@@ -72,6 +73,7 @@ def main(provider_name, timer, scale_up_cap, scale_down_cap, scale_max, scale_mi
                       scale_down_cap=scale_down_cap,
                       scale_max=scale_max,
                       scale_min=scale_min,
+                      endpoint_path=endpoint_path,
                       azure_subscription_id=azure_subscription_id,
                       azure_tenant_id=azure_tenant_id,
                       azure_client_id=azure_client_id,
@@ -80,8 +82,17 @@ def main(provider_name, timer, scale_up_cap, scale_down_cap, scale_max, scale_mi
                       azure_resource_group=azure_resource_group,
                       azure_vmss_name=azure_vmss_name)
     while True:
-        cluster.check_health()
-        cluster.decide_to_scale()
+        metrics = {"totalCPU": 0, "totalMEM": 0, "usedCPU": 0, "usedMEM": 0, "ratioCPU": 0, "ratioMEM": 0, "nbNodes": 0}
+        cluster.check_health(metrics)
+        logger.info("Total Cluster CPU = " + str(metrics["totalCPU"]) + " - Total Cluster CPU = " + str(metrics["totalMEM"]))
+        logger.info("Total Used CPU = " + str(metrics["usedCPU"]) + " - Total Cluster MEM = " + str(metrics["usedMEM"]))
+        logger.info("Ratio CPU = " + str(metrics["ratioCPU"]) + "% - Ratio MEM = " + str(metrics["ratioMEM"])+ "%")
+        if cluster.decide_to_scale(metrics) == 1:
+            logger.info("Scale Up Kicked ... In Progress")
+            cluster.scale_cluster_up(metrics)
+        if cluster.decide_to_scale(metrics) == -1:
+            logger.info("Scale Down Kicked... In Progress")
+            cluster.scale_cluster_down(metrics)
         time.sleep(timer)
 
     logger.info("DC/OS Autoscaler Stopped")

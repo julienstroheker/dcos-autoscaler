@@ -1,6 +1,5 @@
 import logging
-import requests
-import json
+
 
 from autoscaler.providerAzure import Azure
 
