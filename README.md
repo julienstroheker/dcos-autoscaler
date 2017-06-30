@@ -14,6 +14,8 @@ Autoscaling a DCOS cluster hosted in a cloud provider, either Private or Public,
 
 !! In development using Microsoft Azure, but more that welcome to have contribution for AWS, GCE and others providers...
 
+You can either use switch (ex: --timer) or environement variables (ex: export AS_TIMER=60)
+
 | Option | Variable | Description | Default |
 |---|---|---|---|
 | --provider-name | AS_PROVIDER_NAME | provider who host the cluster. ex: Azure, GCE, AWS... |   |
@@ -84,12 +86,14 @@ In this example, you:
 
 From inside the cluster, run this command :
 ```
+export AZURE_CLIENT_ID='5308694f-bed6-494a-9c19-335b3c40b8b3'
+export AZURE_CLIENT_SECRET='myP@ssw0rd1!'
+export AZURE_TENANT_ID='333c7f36-ba66-49f1-9d8a-a450816e8516'
+export AZURE_SUBSCRIPTION_ID='8f26a68d-8613-4a0c-a2a6-2d2d0e261910'
+
 docker run -it -d julienstroheker/dcos-autoscaler python main.py -vv 
     --provider-name Azure 
-    --azure-subscription-id 8f26a68d-8613-4a0c-a2a6-2d2d0e261910
-    --azure-tenant-id 333c7f36-ba66-49f1-9d8a-a450816e8516
-    --azure-client-id 5308694f-bed6-494a-9c19-335b3c40b8b3
-    --azure-client-secret myP@ssw0rd1!
+    --azure-location eastus
     --azure-resource-group myResourceGroup
     --azure-vmss-name dcos-agentprivsl-1453224-vmss
 ```
