@@ -86,12 +86,12 @@ In this example, you:
 
 From inside the cluster, run this command :
 ```
-export AZURE_CLIENT_ID='5308694f-bed6-494a-9c19-335b3c40b8b3'
-export AZURE_CLIENT_SECRET='myP@ssw0rd1!'
-export AZURE_TENANT_ID='333c7f36-ba66-49f1-9d8a-a450816e8516'
-export AZURE_SUBSCRIPTION_ID='8f26a68d-8613-4a0c-a2a6-2d2d0e261910'
-
-docker run -it -d julienstroheker/dcos-autoscaler python main.py -vv 
+docker run -it -d --name=autoscaler
+    -e AZURE_CLIENT_ID='5308694f-bed6-494a-9c19-335b3c40b8b3'
+    -e AZURE_CLIENT_SECRET='myP@ssw0rd1!' 
+    -e AZURE_TENANT_ID='333c7f36-ba66-49f1-9d8a-a450816e8516'
+    -e AZURE_SUBSCRIPTION_ID='8f26a68d-8613-4a0c-a2a6-2d2d0e261910' 
+    julienstroheker/dcos-autoscaler python main.py -vv 
     --provider-name Azure 
     --azure-location eastus
     --azure-resource-group myResourceGroup
