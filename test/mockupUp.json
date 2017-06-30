@@ -533,47 +533,8 @@
             "active": true,
             "version": "1.2.1",
             "reserved_resources_full": {},
-            "used_resources_full": [
-                {
-                    "name": "cpus",
-                    "type": "SCALAR",
-                    "scalar": {
-                        "value": 1.0
-                    },
-                    "role": "*",
-                    "allocation_info": {
-                        "role": "slave_public"
-                    }
-                },
-                {
-                    "name": "mem",
-                    "type": "SCALAR",
-                    "scalar": {
-                        "value": 512.0
-                    },
-                    "role": "*",
-                    "allocation_info": {
-                        "role": "slave_public"
-                    }
-                },
-                {
-                    "name": "ports",
-                    "type": "RANGES",
-                    "ranges": {
-                        "range": [
-                            {
-                                "begin": 22687,
-                                "end": 22687
-                            }
-                        ]
-                    },
-                    "role"Mid: "*",
-                    "allocation_info": {
-                        "role": "slave_public"
-                    }
-                }
-            ],
-            "offered_resources_full": []
+          "used_resources_full": [],
+          "offered_resources_full": []
         }
     ],
     "recovered_slaves": []

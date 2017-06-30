@@ -1,8 +1,8 @@
 import logging
 import sys
 import time
-import json
 import requests
+import json
 
 from autoscaler.provider import Provider
 
@@ -30,12 +30,13 @@ class Cluster(object):
     def get_health(self):
         LOGGER.debug("Get Health Cluster")
         try:
-            r = requests.get(self.endpoint_path)
-            return r.json()
-            #with open('tests/mockupDown2.json') as json_data:
-                #return json.load(json_data)
+            #payload = requests.get(self.endpoint_path)
+            #return payload.json()
+            with open('test/mockupMid.json') as json_data:
+                return json.load(json_data)
         except:
-            LOGGER.error(sys.exc_info()[0])
+            LOGGER.error("Connection to " + str(self.endpoint_path) + " Failed")
+            LOGGER.error(e = sys.exc_info()[0])
             exit(1)
 
 
@@ -70,11 +71,11 @@ class Cluster(object):
     def waiting_scale(self, metrics):
         current_state = metrics
         while metrics == current_state:
-            LOGGER.debug(
+            LOGGER.info(
                 "Waiting for new status of the cluster...Current State = "
-                + current_state["totalCPU"])
+                + str(current_state["totalCPU"]))
             current_state = self.filter_stateless(current_state, self.get_health())
-            time.sleep(30)
+            time.sleep(15)
         return True
 
     def scale_cluster_up(self, metrics):

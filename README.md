@@ -14,22 +14,22 @@ Autoscaling a DCOS cluster hosted in a cloud provider, either Private or Public,
 
 !! In development using Microsoft Azure, but more that welcome to have contribution for AWS, GCE and others providers...
 
-| Option | Description | Default |
-|---|---|---|
-| --provider-name | provider who host the cluster. ex: Azure, GCE, AWS... |   |
-| --timer | time in seconds between successive checks | 60 |
-| --scale-up-cap | Threshold to kick the scale Up in percentage | 80 |
-| --scale-down-cap | Threshold to kick the scale Down in percentage | 20 |
-| --scale-max | Maximum nodes limitation to scale | 20 |
-| --scale-min | Minimum nodes limitation to scale | 3 |
-| --azure-subscription-id | Azure Subscription ID |   |
-| --azure-tenant-id | Azure Tenant ID |   |
-| --azure-client-id | Azure Client ID |   |
-| --azure-client-secret | Azure Client Secret |   |
-| --azure-location | Azure DC Location |   |
-| --azure-resource-group | Azure Resource Group |   |
-| --azure-vmss-name | Azure VMSS Name to scale |   |
-| --v --vv --vvv | The debug noise level | -vv |
+| Option | Variable | Description | Default |
+|---|---|---|---|
+| --provider-name | AS_PROVIDER_NAME | provider who host the cluster. ex: Azure, GCE, AWS... |   |
+| --timer | AS_TIMER | time in seconds between successive checks | 60 |
+| --scale-up-cap | AS_SCALE_UP_MAX | Threshold to kick the scale Up in percentage | 80 |
+| --scale-down-cap | AS_SCALE_DOWN_MAX | Threshold to kick the scale Down in percentage | 20 |
+| --scale-max | AS_SCALE_MAX | Maximum nodes limitation to scale | 20 |
+| --scale-min | AS_SCALE_MIN | Minimum nodes limitation to scale | 3 |
+| --azure-subscription-id | AZURE_SUBSCRIPTION_ID | Azure Subscription ID |   |
+| --azure-tenant-id | AZURE_TENANT_ID | Azure Tenant ID |   |
+| --azure-client-id | AZURE_CLIENT_ID | Azure Client ID |   |
+| --azure-client-secret | AZURE_SECRET_ID | Azure Client Secret |   |
+| --azure-location | AZURE_LOCATION | Azure DC Location |   |
+| --azure-resource-group | AZURE_RG | Azure Resource Group |   |
+| --azure-vmss-name | AZURE_VMSS | Azure VMSS Name to scale |   |
+| --v --vv --vvv | AS_VERBOSE | The debug noise level | -vv |
 
 High level orverview of the very simple code architecture :
 
