@@ -17,6 +17,6 @@ deploy:
   provider: releases
   api_key:
     secure: J0Arp5C/VKqbYN2WdjR2VE7daoxnEVEr9i2IvkolYbaxl358siLecHPb/OarS5d74F/PdfE4Hw7DHPH+AS6xzXV1/qm/BHXNXS0SUjUo53o8d1Bv9SumPCmgF8nk3AapcpeH6B0Z1YlKkgcoiv0WGkPq4ClYo8AkNTJ0QcgqGMC72AC4n3SgekCZ5SrVfqzbbQxv/vd2qbxqRYDBK611uJVBg/N7AC564oMnC0DMC3FogcQN2+xpoW9zo/wFfBEZTqUSxshkITgRB0gPeBawGOmlzqfbvA2DtMsiyKmHVkSlP/0k94hjdWD03q6f+gYrhbCRjbLqhcVE9uau7iDLd9kS0sQyK1dXGlxmXoBQB1/ChsNoiBR5RH8rGNl9iVAioG6OyJ+bv/5W7Ufk/4crsB7ee0+xHbrJXE8Mx5kPjVELIr0cDZ7x2z2T2aIiiFVuJiTFPSmFsKfEQ/045/CjiFR7exzEIv11T6ws4KaFoguoyrnz5f79Wec3Zocxn+1L8xkVfbyGihKHShFdR2awO/gFPTaPqbsvBUH5e53jar9IiCZTCxWE0LcO28aLB8So6W/Tl5dVWCh2MPi4gg3Va0QBLLuWMe4cp4mDuxAsHEQkiTGO2d0zkfsMkTf5ipkoWkeoFkDROb/Q897vCGXNJ0DbgU+ZRH+pc6SyZf7Nt38=
-  file: $(pwd)/universe.zip
+  file: $(pwd)/universe.tar
   on:
     repo: julienstroheker/dcos-autoscaler
