@@ -8,8 +8,7 @@ install:
 - docker build -t julienstroheker/dcos-autoscaler:latest .
 script:
 - docker run -it julienstroheker/dcos-autoscaler:latest nosetests
-- docker run -it -v $(pwd):/app julienstroheker/dcos-autoscaler:latest zip -r universe.zip
-  universe
+- tar -cvf universe.tar universe
 after_success:
 - if [ "$TRAVIS_BRANCH" == "master" ]; then docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
   docker push julienstroheker/dcos-autoscaler:latest; fi
