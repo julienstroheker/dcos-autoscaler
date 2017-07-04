@@ -3,3 +3,4 @@ dcos-autoscaler
 autoscaler/__pycache__
 test/__pycache__
 .cache
+*.DS_Store
