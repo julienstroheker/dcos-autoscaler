@@ -1,0 +1,20 @@
+{
+    "packagingVersion": "2.0",
+    "name": "autoscaler",
+    "version": "0.0.1",
+    "scm": "https://github.com/julienstroheker/dcos-autoscaler.git",
+    "maintainer": "juliens@microsoft.com",
+    "website": "https://github.com/julienstroheker/dcos-autoscaler",
+    "description": "DC/OS Autoscaler. \n\n This autoscaler allow you to scaler your cluster hosted in any cloud provider.",
+    "selected": true,
+    "framework": true,
+    "tags": [
+        "autoscaler",
+        "provider",
+        "Azure",
+        "Microsoft"
+    ],
+    "preInstallNotes": "This DC/OS package is currently in preview, Please click on 'Advanced Installation' to configure it.",
+    "postInstallNotes": "DC/OS Autoscaler is being installed!\n\n\tDocumentation: https://github.com/julienstroheker/dcos-autoscaler \n\n\tIssues: https://github.com/julienstroheker/dcos-autoscaler/issues",
+    "postUninstallNotes": "DC/OS Autoscaler has been uninstalled."
+}

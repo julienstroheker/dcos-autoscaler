@@ -1,0 +1,7 @@
+{
+    "images": {
+        "icon-small": "https://github.com/julienstroheker/dcos-autoscaler/raw/master/docs/universelogo/icon-service-autoscaler-small.png",
+        "icon-medium": "https://github.com/julienstroheker/dcos-autoscaler/raw/master/docs/universelogo/icon-service-autoscaler-medium.png",
+        "icon-large": "https://github.com/julienstroheker/dcos-autoscaler/raw/master/docs/universelogo/icon-service-autoscaler-large.png"
+    }
+}

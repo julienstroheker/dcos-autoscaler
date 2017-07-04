@@ -1,0 +1,46 @@
+{
+  "id": "{{service.name}}",
+  "cpus": 0.1,
+  "mem": 128,
+  "instances": 1,
+  "labels": {
+    "DCOS_PACKAGE_FRAMEWORK_NAME": "{{service.name}}",
+    "DCOS_SERVICE_NAME": "{{service.name}}",
+    "DCOS_MIGRATION_API_VERSION": "v1",
+    "DCOS_MIGRATION_API_PATH": "/v1/plan",
+    "DCOS_SERVICE_PORT_INDEX": "0",
+    "MARATHON_SINGLE_INSTANCE_APP":"true",
+    "DCOS_SERVICE_SCHEME": "http"
+  },
+  "env": {
+    "AS_PROVIDER_NAME": "{{service.provider-name}}",
+    "AS_SCALE_UP_MAX": "{{azureprovider.scale-up-threshold}}",
+    "AS_SCALE_DOWN_MAX": "{{azureprovider.scale-down-threshold}}",
+    "AS_SCALE_MAX": "{{azureprovider.scale-max-limit}}",
+    "AS_SCALE_MIN": "{{service.scale-min-limit}}",
+    "AS_TIMER": "{{advanced.timer}}",
+    "AS_VERBOSE": "{{advanced.verbose}}",
+    "AZURE_SUBSCRIPTION_ID": "{{azureprovider.azure-subscription-id}}",
+    "AZURE_TENANT_ID": "{{azureprovider.azure-tenant-id}}",
+    "AZURE_CLIENT_ID": "{{azureprovider.azure-client-id}}",
+    "AZURE_SECRET_ID": "{{azureprovider.azure-secret-id}}",
+    "AZURE_LOCATION": "{{azureprovider.azure-location}}",
+    "AZURE_RG": "{{azureprovider.azure-resource-group}}",
+    "AZURE_VMSS": "{{azureprovider.azure-vmss-name}}"
+  },
+  "portDefinitions": [
+      {"port": 0, "protocol": "tcp", "name": "nginx"},
+      {"port": 0, "protocol": "tcp", "name": "autoscaler"}
+  ],
+  "container": {
+       "type": "DOCKER",
+       "docker": {
+           "image": "julienstroheker/dcos-autoscaler:{{advanced.tag}}",
+           "network" : "HOST"
+       }
+   },
+  "upgradeStrategy":{
+    "minimumHealthCapacity": 0,
+    "maximumOverCapacity": 0
+  }
+}
