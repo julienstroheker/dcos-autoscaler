@@ -30,10 +30,10 @@ class Cluster(object):
     def get_health(self):
         LOGGER.debug("Get Health Cluster")
         try:
-            #payload = requests.get(self.endpoint_path)
-            #return payload.json()
-            with open('test/mockupMid.json') as json_data:
-                return json.load(json_data)
+            payload = requests.get(self.endpoint_path)
+            return payload.json()
+            #with open('test/mockupMid.json') as json_data:
+                #return json.load(json_data)
         except:
             LOGGER.error("Connection to " + str(self.endpoint_path) + " Failed")
             LOGGER.error(e = sys.exc_info()[0])
