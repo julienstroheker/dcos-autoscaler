@@ -71,10 +71,11 @@ class Cluster(object):
     def waiting_scale(self, metrics):
         current_state = metrics
         while metrics == current_state:
+            #current_state = []
+            current_state = self.filter_stateless(current_state, self.get_health())
             LOGGER.info(
                 "Waiting for new status of the cluster...Current State = "
                 + str(current_state["totalCPU"]))
-            current_state = self.filter_stateless(current_state, self.get_health())
             time.sleep(15)
         return True
 
